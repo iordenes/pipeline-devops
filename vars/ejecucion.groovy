@@ -23,15 +23,8 @@ def call(){
 
     parameters {
 
-        choice(
-
-            name:'compileTool',
-
-            choices: ['Maven', 'Gradle'],
-
-            description: 'Seleccione herramienta de compilacion'
-
-        )
+        choice choices: ['Maven', 'Gradle'], description: 'Seleccione herramienta de compilacion'
+        text description: 'Enviar los stages separados por ;... Vacío si necesita todos los stages'
 
     }
 

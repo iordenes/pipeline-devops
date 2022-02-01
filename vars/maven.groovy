@@ -3,7 +3,7 @@
 	def ejecucion = load 'script.groovy'
 	ejecucion.call()
 */
-def call(){
+def call(stages){
   env.TAREA = "Paso 1: Compliar"
   stage("$env.TAREA"){
     sh "mvn clean compile -e"
