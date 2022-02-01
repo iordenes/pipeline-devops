@@ -49,17 +49,19 @@ def call(){
 
                         case 'Maven':
 
-                            def ejecucion = load 'maven.groovy'
+                            //def ejecucion = load 'maven.groovy'
 
-                            ejecucion.call()
+                            //ejecucion.call()
+                            maven.call()
 
                         break;
 
                         case 'Gradle':
 
-                            def ejecucion = load 'gradle.groovy'
+                            //def ejecucion = load 'gradle.groovy'
 
-                            ejecucion.call()
+                            //ejecucion.call()
+                            gradle.call()
 
                         break;
 
