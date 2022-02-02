@@ -33,7 +33,6 @@ def call(stages){
             "${stageFunction}"()
         }
     }
-​
 //     if (stages.isEmpty()) {
 //         echo 'El pipeline se ejecutará completo'
 //         allStages()

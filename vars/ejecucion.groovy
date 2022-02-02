@@ -1,4 +1,3 @@
-
 def call(){
   pipeline {
       agent any
@@ -20,10 +19,10 @@ def call(){
                         maven.call(params.stages);
                       }else{
                         gradle.call(params.stages)
-                    }
-                }
-            }
-            post{
+                      }
+                  }
+              }
+              post{
 
                 success{
 
@@ -38,12 +37,8 @@ def call(){
                 }
 
             }
-        }
-
-    }
-
+          }
+      }
+  }
 }
-
-}
-
 return this;
