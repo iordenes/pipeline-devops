@@ -19,6 +19,18 @@ def call(stages){
         'curl_jar': 'stageCurlJar'
     ]
 
+    def listCI = [
+        'build',
+        'sonar',
+        'upload_nexus',
+        'run_jar',
+    ]
+
+    def listCD = [
+        'download_nexus',
+        'curl_jar',
+    ]
+
     def arrayUtils = new array.arrayExtentions();
     def stagesArray = []
         stagesArray = arrayUtils.searchKeyInArray(stages, ";", listStagesOrder)
@@ -29,8 +41,15 @@ def call(stages){
     } else {
         echo 'Stages a ejecutar :' + stages
         stagesArray.each{ stageFunction ->//variable as param
-            echo 'Ejecutando ' + stageFunction
-            "${stageFunction}"()
+            if (env.GIT_BRANCH.contains('feature') && listCI.contains(stageFunction)) {
+
+                echo 'Ejecutando ' + stageFunction
+                "${stageFunction}"()
+            }
+            else if (env.GIT_BRANCH.contains('release') && listCD.contains(stageFunction)) {
+                echo 'Ejecutando ' + stageFunction
+                "${stageFunction}"()
+            }
         }
     }
 //     if (stages.isEmpty()) {
