@@ -19,16 +19,26 @@ def call(stages){
         'curl_jar': 'stageCurlJar'
     ]
 
+    def listStagesAll = [
+        'stageCleanBuildTest',
+        'stageSonar',
+        'stageRunSpringCurl',
+        'stageUploadNexus',
+        'stageDownloadNexus',
+        'stageRunJar',
+        'stageCurlJar'
+    ]
+
     def listCI = [
-        'build',
-        'sonar',
-        'upload_nexus',
-        'run_jar',
+        'stageCleanBuildTest',
+        'stageSonar',
+        'stageUploadNexus',
+        'stageRunJar',
     ]
 
     def listCD = [
-        'download_nexus',
-        'curl_jar',
+        'stageDownloadNexus',
+        'stageCurlJar',
     ]
 
     def arrayUtils = new array.arrayExtentions();
@@ -37,7 +47,18 @@ def call(stages){
 
     if (stagesArray.isEmpty()) {
         echo 'El pipeline se ejecutará completo'
-        allStages()
+        //allStages()
+        listStagesAll.each{ stageFunction ->//variable as param
+            if (env.GIT_BRANCH.contains('feature') && listCI.contains(stageFunction)) {
+
+                echo 'Ejecutando ' + stageFunction
+                "${stageFunction}"()
+            }
+            else if (env.GIT_BRANCH.contains('release') && listCD.contains(stageFunction)) {
+                echo 'Ejecutando ' + stageFunction
+                "${stageFunction}"()
+            }
+        }
     } else {
         echo 'Stages a ejecutar :' + stages
         stagesArray.each{ stageFunction ->//variable as param
